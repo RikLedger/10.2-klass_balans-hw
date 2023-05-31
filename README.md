@@ -17,9 +17,36 @@
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy.
 
 ### Решение 1
+*создаём директории*
 ```shell
-enable
+mkdir http1
 ```
+```shell
+mkdir http2
+```
+*в директориях http1 и http2 создаём файл index.html*
+```shell
+nano index.html
+```
+*и прописываем "Server 1 :8888" и "Server 2 :9999"*
+
+*запускаем два простых python server*
+```shell
+python3 -m http.server 8888 --bind 0.0.0.0
+```
+```shell
+python3 -m http.server 9999 --bind 0.0.0.0
+```
+*проверям их*
+```shell
+curl http://localhost:8888
+```
+```shell
+curl http://localhost:9999
+```
+
+
+
 ![1-1](./8.2-1-001.jpg)
 ------
 ### Задание 2
