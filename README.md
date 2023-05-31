@@ -44,9 +44,61 @@ curl http://localhost:8888
 ```shell
 curl http://localhost:9999
 ```
+*установим вебсервер nginx*
+```shell
+sudo apt-get install nginx
+```
+*последовательно выпонлняем*
+```shell
+nano /etc/nginx/nginx.conf
+nano /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl start nginx
+```
+*создаем файл*
+```shell
+nano /etc/nginx/conf.d/example-http.conf
+```
+```shell
+include /etc/nginx/include/upstream.inc;
 
+server {
+   listen	80;
+   
 
+   server_name	example-http.com;
+   
 
+   access_log	/var/log/nginx/example-http.com-acess.log;
+   error_log	/var/log/nginx/example-http.com-error.log;
+
+   location / {
+		proxy_pass	http://example_app;
+
+   }
+
+}
+```
+*создаем файл*
+```shell
+sudo mkdir /etc/nginx/include
+sudo nano /etc/nginx/include/upstream.inc
+```
+```shell
+upstream example_app {
+
+	server 127.0.0.1:8888;
+  server 127.0.0.1:9999;
+
+}
+```
+*перезапускаем сервер*
+```shell
+sudo systemctl reload nginx
+```
+```shell
+curl -H 'Host: example-http.com' http://localhost
+```
 ![1-1](./8.2-1-001.jpg)
 ------
 ### Задание 2
