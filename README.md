@@ -37,6 +37,10 @@ python3 -m http.server 8888 --bind 0.0.0.0
 ```shell
 python3 -m http.server 9999 --bind 0.0.0.0
 ```
+*установим Haproxy*
+```shell
+sudo apt-get install haproxy
+```
 *проверям их*
 ```shell
 curl http://localhost:8888
