@@ -17,6 +17,12 @@
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy.
 
 ### Решение 1
+*перед началом нужно установить*
+```shell
+sudo apt-get install nginx
+sudo apt-get install python3-pip
+sudo apt-get install haproxy
+```
 *создаём директории*
 ```shell
 mkdir http1
@@ -37,10 +43,7 @@ python3 -m http.server 8888 --bind 0.0.0.0
 ```shell
 python3 -m http.server 9999 --bind 0.0.0.0
 ```
-*установим Haproxy*
-```shell
-sudo apt-get install haproxy
-```
+*настраиваем Haproxy*
 ```shell
 nano /etc/haproxy/haproxy.cfg
 ```
@@ -87,11 +90,7 @@ curl http://localhost:8888
 ```shell
 curl http://localhost:9999
 ```
-*установим вебсервер nginx*
-```shell
-sudo apt-get install nginx
-```
-*последовательно выпонлняем*
+*последовательно выпонлняем (для проверки что файлы существуют)*
 ```shell
 nano /etc/nginx/nginx.conf
 nano /etc/nginx/sites-enabled/default
