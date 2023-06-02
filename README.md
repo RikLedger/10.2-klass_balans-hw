@@ -163,9 +163,15 @@ listen web_tcp
         server s1 127.0.0.1:8888 check inter 3s
         server s2 127.0.0.1:9999 check inter 3s
         server s2 127.0.0.1:7777 check inter 3s
-
 ```
-![2-1](./10.2-1-001.jpg)
+
+ *проверяем работоспособность*
+```shell
+curl http://localhost:1325
+```
+
+
+![2-1](./10.2-2-001.jpg)
 
 
 
