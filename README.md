@@ -60,9 +60,7 @@ listen stats  # веб-страница со статистикой
 frontend example  # секция фронтенд
         mode http
         bind :8088
-        #default_backend web_servers
-	acl ACL_example.com hdr(host) -i example.com
-	use_backend web_servers if ACL_example.com
+        default_backend web_servers
 
 backend web_servers    # секция бэкенд
         mode http
@@ -72,13 +70,6 @@ backend web_servers    # секция бэкенд
         server s1 127.0.0.1:8888 check
         server s2 127.0.0.1:9999 check
 
-
-listen web_tcp
-
-	bind :1325
-
-	server s1 127.0.0.1:8888 check inter 3s
-	server s2 127.0.0.1:9999 check inter 3s
 ```
 ```shell
 sudo systemctl reload haproxy
@@ -107,10 +98,8 @@ include /etc/nginx/include/upstream.inc;
 server {
    listen	80;
    
-
    server_name	example-http.com;
    
-
    access_log	/var/log/nginx/example-http.com-acess.log;
    error_log	/var/log/nginx/example-http.com-error.log;
 
@@ -118,7 +107,6 @@ server {
 		proxy_pass	http://example_app;
 
    }
-
 }
 ```
 *создаем файл*
@@ -141,7 +129,7 @@ sudo systemctl reload nginx
 ```shell
 curl -H 'Host: example-http.com' http://localhost
 ```
-![1-1](./8.2-1-001.jpg)
+![1-1](./10.2-1-001.jpg)
 ------
 ### Задание 2
 - Запустите три simple python сервера на своей виртуальной машине на разных портах
@@ -150,5 +138,11 @@ curl -H 'Host: example-http.com' http://localhost
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy c использованием домена example.local и без него.
 
 ### Решение 2
+
+
+![2-1](./10.2-1-001.jpg)
+
+
+
 
 ---
