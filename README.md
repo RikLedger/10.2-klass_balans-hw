@@ -127,7 +127,8 @@ upstream example_app {
 sudo systemctl reload nginx
 ```
 ```shell
-curl -H 'Host: example-http.com' http://localhost
+curl -H 'Host:example.com' http://127.0.0.1:8088
+
 ```
 ![1-1](./10.2-1-001.jpg)
 ------
@@ -138,8 +139,32 @@ curl -H 'Host: example-http.com' http://localhost
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy c использованием домена example.local и без него.
 
 ### Решение 2
+*дополняем и корректируем файл haproxy.conf*
+```shell
+frontend example  # секция фронтенд
+        mode http
+        bind :8088
+        #default_backend web_servers
+        acl ACL_example.com hdr(host) -i example.com
+        use_backend web_servers if ACL_example.com
 
+backend web_servers    # секция бэкенд
+        mode http
+        balance roundrobin
+        option httpchk
+        http-check send meth GET uri /index.html
+        server s1 127.0.0.1:8888 check
+        server s2 127.0.0.1:9999 check
+        server s2 127.0.0.1:7777 check
 
+listen web_tcp
+        bind :1325
+
+        server s1 127.0.0.1:8888 check inter 3s
+        server s2 127.0.0.1:9999 check inter 3s
+        server s2 127.0.0.1:7777 check inter 3s
+
+```
 ![2-1](./10.2-1-001.jpg)
 
 
