@@ -169,6 +169,12 @@ listen web_tcp
 ```shell
 curl http://localhost:1325
 ```
+nano /etc/nginx/conf.d/example-http.conf
+
+*меняем http://example_app; на http://localhost:1325;*
+
+sudo systemctl reload nginx
+
 
 
 ![2-1](./10.2-2-001.jpg)
