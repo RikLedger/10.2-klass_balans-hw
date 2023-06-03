@@ -147,6 +147,19 @@ curl -H 'Host:example.com' http://127.0.0.1:8088
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy c использованием домена example.local и без него.
 
 ### Решение 2
+
+*добавляем ещё один сервер*
+```shell
+sudo nano /etc/nginx/include/upstream.inc
+```
+```shell
+upstream example_app {
+
+	server 127.0.0.1:8888;
+        server 127.0.0.1:9999;
+        server 127.0.0.1:7777;
+}
+```
 *дополняем и корректируем файл haproxy.conf*
 ```shell
 frontend example  # секция фронтенд
@@ -163,14 +176,14 @@ backend web_servers    # секция бэкенд
         http-check send meth GET uri /index.html
         server s1 127.0.0.1:8888 check
         server s2 127.0.0.1:9999 check
-        server s2 127.0.0.1:7777 check
+        server s3 127.0.0.1:7777 check
 
 listen web_tcp
         bind :1325
 
         server s1 127.0.0.1:8888 check inter 3s
         server s2 127.0.0.1:9999 check inter 3s
-        server s2 127.0.0.1:7777 check inter 3s
+        server s3 127.0.0.1:7777 check inter 3s
 ```
 
  *проверяем работоспособность*
