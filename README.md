@@ -85,6 +85,9 @@ curl http://localhost:9999
 ```shell
 nano /etc/nginx/nginx.conf
 nano /etc/nginx/sites-enabled/default
+```
+*выполняем проверку конфигурационных файлов и запускаем*
+```shell
 sudo nginx -t
 sudo systemctl start nginx
 ```
