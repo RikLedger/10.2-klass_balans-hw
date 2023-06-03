@@ -155,9 +155,10 @@ sudo nano /etc/nginx/include/upstream.inc
 ```shell
 upstream example_app {
 
-	server 127.0.0.1:8888;
-        server 127.0.0.1:9999;
-        server 127.0.0.1:7777;
+        server 127.0.0.1:8888 weight=2;
+        server 127.0.0.1:9999 weight=3;
+        server 127.0.0.1:7777 weight=4;
+
 }
 ```
 *дополняем и корректируем файл haproxy.conf*
