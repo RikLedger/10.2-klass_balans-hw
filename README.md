@@ -74,7 +74,7 @@ backend web_servers    # секция бэкенд
 ```shell
 sudo systemctl reload haproxy
 ```
-*проверям их*
+*проверям их на 7 уровне*
 ```shell
 curl http://localhost:8888
 ```
