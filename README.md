@@ -187,21 +187,24 @@ listen web_tcp
         server s3 127.0.0.1:7777 check inter 3s
 ```
 
- *проверяем работоспособность*
+*меняем http://example_app; на http://localhost:1325;*
+```shell
+nano /etc/nginx/conf.d/example-http.conf
+```
+ ```shell
+sudo systemctl reload nginx
+```
+ *проверяем работоспособность на 4 уровне*
 ```shell
 curl http://localhost:1325
 ```
-nano /etc/nginx/conf.d/example-http.conf
-
-*меняем http://example_app; на http://localhost:1325;*
-
-sudo systemctl reload nginx
 
 
+ *проверяем работоспособность на 7 уровне с example.com и без, без происходит отказ так как у нас жестко прописанно проверка по example.com в файле haproxy.conf*
+```shell
+curl -H 'Host:example.com' http://127.0.0.1:8088
+```
 
 ![2-1](./10.2-2-001.jpg)
-
-
-
 
 ---
